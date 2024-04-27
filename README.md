@@ -1,125 +1,96 @@
-# Tech Used
-1. Spring Boot
-2. PostgreSQL
+## Tech Stack
+- Spring Boot
+- PostgreSQL
 
-# How to run project
-1. Using Github
-   a. git clone https://github.com/RickyParte/Employee-Backend.git
-   b. create database using pgAdmin or dbeaver Database Name -> employee
-   c. spring.datasource.url="Enter Your DB URL"  ex. -> "jdbc:postgresql://localhost:5432/employee?currentSchema=employee"
-      spring.datasource.username= "Enter Your DB Username"  ex. -> "postgres"
-      spring.datasource.password="Enter Your DB password"  ex. ->  "admin"
-   d. Run project and check it is working fine.
-   e. Testing APIS using Postman,swagger
+## How to Run the Project
 
+### Using GitHub
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/RickyParte/Employee-Backend.git
+   ```
 
-2. Using Deployed Server
-   a. deployed link
-   b. Testing APIS using Postman,swagger
+2. Create a database using pgAdmin or DBeaver with the name `employee`.
 
+3. Update the database configuration in the application.properties file:
+   ```properties
+   spring.datasource.url=jdbc:postgresql://localhost:5432/employee?currentSchema=employee
+   spring.datasource.username=postgres
+   spring.datasource.password=admin
+   ```
 
-3. Using Zip
-   a. extract folder and open in your favourite IDE
-   b. create database using pgAdmin or dbeaver Database Name -> employee
-   c. spring.datasource.url="Enter Your DB URL"  ex. -> "jdbc:postgresql://localhost:5432/employee?currentSchema=employee"
-      spring.datasource.username= "Enter Your DB Username"  ex. -> "postgres"
-      spring.datasource.password="Enter Your DB password"  ex. ->  "admin"
-   d. Run project and check it is working fine.
-   e. Testing APIS using Postman,swagger
+4. Run the project and check if it is working fine.
 
+### Using Deployed Server
+1. Access the deployed server at [deployed_link](#).
 
-#API DOC
+2. Test APIs using Postman or Swagger.
 
-1. Add Employee
-  a. addEmployee
-     Endpoint: POST /api/employee/add-employee
-     URL: localhost:8080/api/employee/add-employee
-     CURL: curl --location 'localhost:8080/api/employee/add-employee' \
-           --header 'Content-Type: application/json' \
-           --data-raw '{
-           "employeeName": "Ricky Parte Email",
-           "phoneNumber": "892500075",
-           "email": "rickydipakparte20243@gmail.com",
-           "reportsTo": "c971cfd3-fa8a-4c58-93c7-1c93f5916e34",
-           "profileImage": "null"
-          }'
-     Request Body:
-         {
-            "employeeName": "Ricky Parte Email",
-            "phoneNumber": "892500075",
-            "email": "rickydipakparte20243@gmail.com",
-            "reportsTo": "c971cfd3-fa8a-4c58-93c7-1c93f5916e34",
-            "profileImage": "null"
-        }
+### Using Zip
+1. Extract the folder and open it in your favorite IDE.
 
-     Response: 
+2. Create a database using pgAdmin or DBeaver with the name `employee`.
 
+3. Update the database configuration in the application.properties file as mentioned above.
 
-3. Get All Employees
-   a. getAllEmployee
-      URL: localhost:8080/api/employee/get-employees
-      CURL: curl --location 'localhost:8080/api/employee/get-employees'
-      Endpoint: GET /api/employee/get-employees
-      Request Body: No request body
-      Response: 
+4. Run the project and check if it is working fine.
 
-5. Delete Employee By ID
-  a.  deleteEmployeeByEmployeeId
-      Endpoint: POST /api/employee/delete-employee-by-id
-      URL: localhost:8080/api/employee/delete-employee-by-id
-      CURL: curl --location --request POST 'localhost:8080/api/employee/delete-employee-by-id' \
-            --header 'employeeId: 9bafd606-732e-4076-8c34-c5e5e632b07f'
-      Request Header: employeeId-> value of employeeId
-      Response: 
-      
-   
-7. Update Employee
-  a. updateEmployee
-     Endpoint: POST /api/employee/update-employee/{employeeId}
-     URL: localhost:8080/api/employee/update-employee/f9be16f7-00f3-48f9-b255-b867193cac23
-     CURL: curl --location 'localhost:8080/api/employee/update-employee/f9be16f7-00f3-48f9-b255-b867193cac23' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{
-            "employeeName": "Ricky Parte Work",
-            "phoneNumber": "4568536948",
-            "email": "fs19if043@gmail.com",
-            "reportsTo": "null",
-            "profileImage": "null"
-        }'
-     Request Body:
-       {
-            "employeeName": "Ricky Parte Work",
-            "phoneNumber": "4568536948",
-            "email": "fs19if043@gmail.com",
-            "reportsTo": "null",
-            "profileImage": "null"
-       }
+## API Documentation
 
-     Response: 
-   
-9. Get Nth Manager
-  a. getNthManager
-     Endpoint: POST /api/employee/get-nth-manager
-     URL: localhost:8080/api/employee/get-nth-manager
-     CURL: curl --location --request POST 'localhost:8080/api/employee/get-nth-manager' \
-            --header 'employeeId: c971cfd3-fa8a-4c58-93c7-1c93f5916e34' \
-            --header 'managerLevel: 4' \
-            --data ''
-     Request Header: employeeId-> value of employeeId
-     Request Header: managerLevel -> value of level 
-     Response:
-  
-11. Email Send to Level 1 Manager for employee working under
-    a. same add employee API and inside that add employee call for send Mail
-  
-12. Get Employee With Pagination
-   a. getEmployeeWithPagination
-      Endpoint: GET /api/employee/get-all-employees
-      URL: localhost:8080/api/employee/get-all-employees?page=0&size=5&sort=employeeName
-      CURL: curl --location 'localhost:8080/api/employee/get-all-employees?page=0&size=5&sort=employeeName'
-      Request Param: page=0&size=5&sort=employeeName
-      Response:
+### Add Employee
+- **Endpoint:** POST /api/employee/add-employee
+- **Request URL:** localhost:8080/api/employee/add-employee
+- **Request Body:**
+  ```json
+  {
+    "employeeName": "Ricky Parte Email",
+    "phoneNumber": "892500075",
+    "email": "rickydipakparte20243@gmail.com",
+    "reportsTo": "c971cfd3-fa8a-4c58-93c7-1c93f5916e34",
+    "profileImage": "null"
+  }
+  ```
+- **Response:** 
 
-   
+### Get All Employees
+- **Endpoint:** GET /api/employee/get-employees
+- **Request URL:** localhost:8080/api/employee/get-employees
+- **Response:** 
+
+### Delete Employee By ID
+- **Endpoint:** POST /api/employee/delete-employee-by-id
+- **Request URL:** localhost:8080/api/employee/delete-employee-by-id
+- **Request Header:** `employeeId` -> value of employeeId
+- **Response:** 
 
 
+### Update Employee
+- **Endpoint:** POST /api/employee/update-employee/{employeeId}
+- **Request URL:** localhost:8080/api/employee/update-employee/{employeeId}
+- **Request Body:**
+  ```json
+  {
+    "employeeName": "Ricky Parte Work",
+    "phoneNumber": "4568536948",
+    "email": "fs19if043@gmail.com",
+    "reportsTo": "null",
+    "profileImage": "null"
+  }
+  ```
+- **Response:** 
+
+### Get Nth Manager
+- **Endpoint:** POST /api/employee/get-nth-manager
+- **Request URL:** localhost:8080/api/employee/get-nth-manager
+- **Request Header:** 
+  - `employeeId` -> value of employeeId
+  - `managerLevel` -> value of level 
+- **Response:** 
+
+### Get Employee With Pagination
+- **Endpoint:** GET /api/employee/get-all-employees
+- **Request URL:** localhost:8080/api/employee/get-all-employees?page=0&size=5&sort=employeeName
+- **Request Param:** page=0&size=5&sort=employeeName
+- **Response:**
+
+```
