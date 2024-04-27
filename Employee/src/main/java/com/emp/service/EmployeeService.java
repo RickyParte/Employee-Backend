@@ -1,73 +1,25 @@
 package com.emp.service;
 
-import com.emp.dao.EmployeeRepository;
 import com.emp.entities.EmployeeEntity;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class EmployeeService {
+public interface EmployeeService {
+    public String registerEmployee(EmployeeEntity employeeEntity);
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    public List<EmployeeEntity> getAllEmployees();
 
-    public String registerEmployee(EmployeeEntity employeeEntity){
-        EmployeeEntity employeeSavedEntity = employeeRepository.save(employeeEntity);
-        if(employeeSavedEntity.getEmployeeId()!=null){
-            return employeeSavedEntity.getEmployeeId();
-        }
-        return "Error in Connecting to DB";
-    }
+    public void deleteEmployee(String employeeId);
 
-    public List<EmployeeEntity> getAllEmployees(){
-        List<EmployeeEntity> allEmployees=employeeRepository.findAll();
-        return allEmployees;
-    }
+    public EmployeeEntity updateEmployee(EmployeeEntity employeeEntity);
 
-    public void deleteEmployee(String employeeId){
-        employeeRepository.deleteById(employeeId);
-    }
+    public EmployeeEntity getEmployeeByEmail(String email);
 
-    @Transactional
-    public EmployeeEntity updateEmployee(EmployeeEntity employeeEntity){
-        EmployeeEntity updatedEmployee=employeeRepository.save(employeeEntity);
-        return updatedEmployee;
-    }
+    public Optional<EmployeeEntity> getManagerById(String employeeId);
 
-    public EmployeeEntity getEmployeeByEmail(String email){
-        EmployeeEntity employeeEntityByEmail=employeeRepository.findByEmail(email);
-        if(employeeEntityByEmail!=null){
-            return employeeEntityByEmail;
-        }
-        return null;
-    }
+    public Optional<EmployeeEntity> getEmployeeById(String employeeId);
 
-    public EmployeeEntity getManager(String employeeId){
-        EmployeeEntity employeeEntity=employeeRepository.getOne(employeeId);
-        if(employeeEntity!=null){
-            return employeeEntity;
-        }
-        return null;
-    }
-
-    public Optional<EmployeeEntity> getManagerById(String employeeId){
-        Optional<EmployeeEntity> employeeEntity=employeeRepository.findById(employeeId);
-        if(employeeEntity!=null){
-            return employeeEntity;
-        }
-        return null;
-    }
-
-    public Optional<EmployeeEntity> getEmployeeById(String employeeId){
-        Optional<EmployeeEntity> employeeEntity=employeeRepository.findById(employeeId);
-        if(employeeEntity!=null){
-            return employeeEntity;
-        }
-        return null;
-    }
+    public List<EmployeeEntity> getAllEmployeesByPagination(Pageable pageable);
 
 }
