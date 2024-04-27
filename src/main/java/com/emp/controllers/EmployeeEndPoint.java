@@ -38,25 +38,33 @@ public class EmployeeEndPoint {
 
             EmployeeEntity getExistingEmailEmployee=employeeService.getEmployeeByEmail(employeeEntity.getEmail());
             if(getExistingEmailEmployee==null){
-                String registerMessage = employeeService.registerEmployee(employeeEntity);
 
-                if(registerMessage.equals("Error in Connecting to DB")){
-                    return ResponseEntity.badRequest().body(new EmployeeResponse(null,"Error in Connecting to DB",null));
-                }
+                boolean existingManager=employeeService.getManagerById(employeeEntity.getReportsTo()).isPresent();
 
-                try{
-                    String managerEmail=employeeService.getManagerById(employeeEntity.getReportsTo()).get().getEmail();
-                    String subject="New Employee Reporting You!!";
-                    String emailContent=employeeEntity.getEmployeeName() + " will now work under you. Mobile number is "
-                            + employeeEntity.getPhoneNumber() + " and email is " + employeeEntity.getEmail();
-                    emailService.sendEmailNotificationToManager1(managerEmail,subject,emailContent);
-                }
-                catch(Exception e){
-                    System.out.println("API Exception Email Sending");
-                    System.out.println(e.getMessage());
-                }
+                if(existingManager){
+                    String registerMessage = employeeService.registerEmployee(employeeEntity);
 
-                return ResponseEntity.ok(new EmployeeResponse(employeeId, registerMessage,null));
+                    if(registerMessage.equals("Error in Connecting to DB")){
+                        return ResponseEntity.badRequest().body(new EmployeeResponse(null,"Error in Connecting to DB",null));
+                    }
+
+                    try{
+                        String managerEmail=employeeService.getManagerById(employeeEntity.getReportsTo()).get().getEmail();
+                        String subject="New Employee Reporting You!!";
+                        String emailContent=employeeEntity.getEmployeeName() + " will now work under you. Mobile number is "
+                                + employeeEntity.getPhoneNumber() + " and email is " + employeeEntity.getEmail();
+                        emailService.sendEmailNotificationToManager1(managerEmail,subject,emailContent);
+                    }
+                    catch(Exception e){
+                        System.out.println("API Exception Email Sending");
+                        System.out.println(e.getMessage());
+                    }
+
+                    return ResponseEntity.ok(new EmployeeResponse(employeeId, registerMessage,null));
+                }
+                else{
+                    return ResponseEntity.ok(new EmployeeResponse(null, "This EmployeeId "+ employeeEntity.getReportsTo() +" is not associated with any Employee!!",null));
+                }
             }
             else{
                 return ResponseEntity.badRequest().body(new EmployeeResponse(null, "Employee Email is Already Registered!!!",null));
