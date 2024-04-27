@@ -23,6 +23,12 @@ public class EmployeeEndPoint {
     @Autowired
     private EmailService emailService;
 
+    /**
+     * API endpoint to add an employee to the database.
+     *
+     * @param employeeEntity The employee details to be added.
+     * @return ResponseEntity The response indicating the success or failure of the operation.
+     */
     @PostMapping("add-employee")
     public ResponseEntity addEmployee(@RequestBody EmployeeEntity employeeEntity){
         try{
@@ -65,6 +71,11 @@ public class EmployeeEndPoint {
         }
     }
 
+    /**
+     * API endpoint to retrieve all employees from the database.
+     *
+     * @return ResponseEntity<List<EmployeeEntity>> The list of all employees.
+     */
     @GetMapping("get-employees")
     public ResponseEntity<List<EmployeeEntity>> getAllEmployee(){
         List<EmployeeEntity> employees;
@@ -78,6 +89,12 @@ public class EmployeeEndPoint {
         return ResponseEntity.ok(employees);
     }
 
+    /**
+     * API endpoint to delete an employee from the database based on their ID.
+     *
+     * @param employeeId The ID of the employee to be deleted.
+     * @return ResponseEntity The response indicating the success or failure of the operation.
+     */
     @PostMapping("delete-employee-by-id")
     public ResponseEntity deleteEmployeeByEmployeeId(@RequestHeader String employeeId){
         try{
@@ -91,6 +108,13 @@ public class EmployeeEndPoint {
         }
     }
 
+    /**
+     * API endpoint to update the details of an employee in the database based on their ID.
+     *
+     * @param employeeId The ID of the employee to be updated.
+     * @param employeeEntity The updated employee details.
+     * @return ResponseEntity<String> The response indicating the success or failure of the operation.
+     */
     @PostMapping("update-employee/{employeeId}")
     public ResponseEntity updateEmployee(@PathVariable String employeeId,@RequestBody EmployeeEntity employeeEntity){
         try{
@@ -105,6 +129,13 @@ public class EmployeeEndPoint {
         }
     }
 
+    /**
+     * API endpoint to get the nth level manager of an employee.
+     *
+     * @param employeeId    The ID of the employee.
+     * @param managerLevel  The level of the manager to retrieve.
+     * @return ResponseEntity<String> The response indicating the manager at the specified level.
+     */
     @PostMapping("get-nth-manager")
     public ResponseEntity getNthManager(@RequestHeader String employeeId,@RequestHeader String managerLevel){
 
@@ -154,6 +185,13 @@ public class EmployeeEndPoint {
         }
     }
 
+    /**
+     * API endpoint to get employees with pagination and sorting options.
+     *
+     * @param page     The page number.
+     * @param size     The page size.
+     * @param sortBy   The field to sort by (e.g., name or email).
+     */
     @GetMapping("/get-all-employees")
     public ResponseEntity getEmployeeWithPagination(
             @RequestParam(defaultValue = "0") int page,
