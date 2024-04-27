@@ -39,7 +39,14 @@ public class EmployeeEndPoint {
             EmployeeEntity getExistingEmailEmployee=employeeService.getEmployeeByEmail(employeeEntity.getEmail());
             if(getExistingEmailEmployee==null){
 
-                boolean existingManager=employeeService.getManagerById(employeeEntity.getReportsTo()).isPresent();
+                boolean existingManager=false;
+
+                if(employeeEntity.getReportsTo().equals("null")){
+                    existingManager=true;
+                }
+                else{
+                    existingManager=employeeService.getManagerById(employeeEntity.getReportsTo()).isPresent();
+                }
 
                 if(existingManager){
                     String registerMessage = employeeService.registerEmployee(employeeEntity);
