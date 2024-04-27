@@ -10,7 +10,7 @@ public class EmployeeEntity {
     @Column(nullable = false)
     private String employeeName;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 10)
     private String phoneNumber;
 
     @Column(nullable = false)
